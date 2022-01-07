@@ -61,10 +61,10 @@ check_test () {
     local contrunning=$3
     local filetype=$4
 
-    # option to use cmp instead?
-    returnval=$(diff $testdir/$testnum.$filetype tests-out/$testnum.$filetype)
+    # option to use cmp instead?  
+    returnval=$(cmp $testdir/$testnum.$filetype tests-out/$testnum.$filetype)
     if (( $? == 0 )); then
-	echo 0
+        echo 0
     else
 	echo 1
     fi
@@ -95,6 +95,8 @@ run_and_check () {
     outcheck=$(check_test $testdir $testnum $contrunning out)
     errcheck=$(check_test $testdir $testnum $contrunning err)
     othercheck=0
+ 
+    
     if [[ -f $testdir/$testnum.other ]]; then
 	othercheck=$(check_test $testdir $testnum $contrunning other)
     fi
